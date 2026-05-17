@@ -1,36 +1,150 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Code Assistant
+
+AI Code Assistant is a Next.js application that helps users work with code faster using Google Gemini. It can explain code, debug code, and generate fresh code from a prompt in the programming language the user chooses.
+
+## Features
+
+- Explain user code with a summary, step-by-step breakdown, and improvement suggestions
+- Debug user code by analyzing the source code and optional error message
+- Generate code from a plain-English description
+- Support different programming languages for generated output
+- API-based structure that is easy to extend with a custom frontend
+
+## Core Capabilities
+
+### 1. Explain Code
+Send a code snippet and the app returns:
+
+- What the code does
+- A step-by-step explanation
+- Possible issues or improvements
+
+Endpoint:
+
+```http
+POST /api/explain
+```
+
+Example request:
+
+```json
+{
+  "code": "function add(a, b) { return a + b; }"
+}
+```
+
+### 2. Debug Code
+Send code with an optional error message and the app returns:
+
+- The likely cause of the error
+- A step-by-step fix
+- Corrected code guidance
+- Tips to avoid the same issue later
+
+Endpoint:
+
+```http
+POST /api/debug
+```
+
+Example request:
+
+```json
+{
+  "code": "console.log(user.name)",
+  "errorMessage": "Cannot read properties of undefined"
+}
+```
+
+### 3. Generate Code
+Describe what you want to build and choose a programming language. The app returns:
+
+- Generated code
+- A short explanation
+- Example usage when relevant
+
+Endpoint:
+
+```http
+POST /api/generate
+```
+
+Example request:
+
+```json
+{
+  "programmingLanguage": "TypeScript",
+  "description": "Create a function that groups an array of users by role."
+}
+```
+
+## Tech Stack
+
+- Next.js 16
+- React 19
+- TypeScript
+- Google Gemini via `@google/generative-ai`
+- Tailwind CSS 4
+
+## Project Structure
+
+```text
+app/
+  api/
+    explain/route.ts
+    debug/route.ts
+    generate/route.ts
+  components/
+  types/
+```
 
 ## Getting Started
 
-First, run the development server:
+### 1. Install dependencies
+
+```bash
+npm install
+```
+
+### 2. Add environment variables
+
+Create a `.env.local` file in the project root:
+
+```env
+GEMINI_API_KEY=your_gemini_api_key_here
+```
+
+### 3. Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000` in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Available Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run dev
+npm run build
+npm run start
+npm run lint
+```
 
-## Learn More
+## Notes
 
-To learn more about Next.js, take a look at the following resources:
+- The AI routes use the `gemini-2.5-flash` model
+- `GEMINI_API_KEY` is required for all AI features to work
+- The backend feature routes are implemented and ready to connect to a richer UI
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Future Improvements
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Add a full interactive frontend for submitting code and prompts
+- Save prompt and response history
+- Add syntax highlighting for input and output
+- Let users upload files instead of pasting code manually
+- Add copy, export, and share actions for generated results
 
-## Deploy on Vercel
+## License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is for learning and personal development use unless you choose to add your own license.
